@@ -1,0 +1,7 @@
+# Don't commit node_modules/ package-lock and environment variables
+/node_modules
+/package-lock.json
+/.env
+
+#prisma SQL script for migration
+/src/prisma/migrations

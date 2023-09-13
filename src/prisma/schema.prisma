@@ -1,0 +1,43 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DB_URL")
+  extensions = [postgis(version: "3.4.0")]
+}
+
+model animal {
+  animal_id   Int        @id @default(autoincrement())
+  animal_name String
+  sighting    sighting[]
+}
+
+model locations {
+  location_id Int                     @id @default(autoincrement())
+  coordinate Unsupported("geometry(Point, 4326)")
+  sighting    sighting[]
+
+  // the index for that column
+  @@index([coordinate], name: "location_idx", type: Gist)
+}
+
+model sighting {
+  animal_id   Int
+  location_id Int
+  animal      animal    @relation(fields: [animal_id], references: [animal_id], onDelete: Cascade, onUpdate: NoAction)
+  locations   locations @relation(fields: [location_id], references: [location_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([animal_id, location_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}
