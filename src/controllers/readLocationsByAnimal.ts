@@ -4,8 +4,8 @@ import { IAnimalRequest } from "../models/express";
 
 export class ReadLocationsByAnimalController {
 
-  async handle(request: Request<{}, {}, IAnimalRequest>, response: Response) {
-    const { id } = request.body;
+  async handle(request: Request<IAnimalRequest, {}, {}>, response: Response) {
+    const { id } = request.params;
 
     if(!id)
       return;

@@ -17,7 +17,7 @@ router.post("/animal", createAnimal.handle);
 router.post("/sighting", createSighting.handle.bind(createSighting));
 router.post("/locations", createLocations.handle);
 router.get("/animals/area", readAnimalFromArea.handle);
-router.get("/locations/animal", readLocationsByAnimal.handle);
+router.get("/locations/animal/:id", readLocationsByAnimal.handle);
 
 export { router };
 
