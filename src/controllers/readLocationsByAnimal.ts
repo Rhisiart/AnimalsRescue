@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import { selectLocationByAnimal } from "../client/rawQueries/locations";
-import { IAnimalRequest } from "../models/express";
 
 export class ReadLocationsByAnimalController {
 
-  async handle(request: Request<{}, {}, IAnimalRequest>, response: Response) {
-    const { id } = request.body;
+  async handle(request: Request<{id : string}, {}, {}>, response: Response) {
+    const { id } = request.params;
+    const animalId = Number(id);
 
-    if(!id)
+    if(isNaN(animalId))
       return;
 
-    const locations = await selectLocationByAnimal(id);
+    const locations = await selectLocationByAnimal(animalId);
 
     return response.json(locations);
   }
