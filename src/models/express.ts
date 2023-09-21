@@ -8,9 +8,8 @@ export interface ICoord {
   longitude : number
 }
 
-export interface IArea {
-  distance : number,
-  coordinate : ICoord
+export interface IArea extends ICoord {
+  distance : number
 }
 
 export interface ILocationRequest {
