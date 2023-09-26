@@ -1,4 +1,4 @@
-import { ILocationRequest } from "../../models/express";
+import { ICoord, ILocationRequest } from "../../models/express";
 import { prisma } from "../prismaClient";
 
 export const insertLocation = async (lat: number, long : number) => {
@@ -18,7 +18,7 @@ export const insertLocation = async (lat: number, long : number) => {
 
 export const selectLocationByAnimal = async (animalId : number) => {
   try {
-    return await prisma.$queryRaw`SELECT l.location_id, ST_X(l.coordinate) AS longitude, ST_Y(l.coordinate) AS latitude
+    return await prisma.$queryRaw<ICoord[]>`SELECT ST_X(l.coordinate) AS longitude, ST_Y(l.coordinate) AS latitude
                                               FROM locations l 
                                               INNER JOIN sighting s ON l.location_id = s.location_id 
                                               WHERE s.animal_id = ${animalId} AND l.location_id IS NOT NULL`;
