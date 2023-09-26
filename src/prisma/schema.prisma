@@ -27,6 +27,7 @@ model locations {
 model sighting {
   animal_id   Int
   location_id Int
+  createdAt DateTime @default(now())
   animal      animal    @relation(fields: [animal_id], references: [animal_id], onDelete: Cascade, onUpdate: NoAction)
   locations   locations @relation(fields: [location_id], references: [location_id], onDelete: Cascade, onUpdate: NoAction)
 

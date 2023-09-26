@@ -16,4 +16,4 @@ app.use(cors({
 app.use(express.json());
 app.use(router);
 
-httpServer.listen(port, "localhost", () => console.log("API running"));
+httpServer.listen(port, "192.168.1.119", () => console.log("API running"));
